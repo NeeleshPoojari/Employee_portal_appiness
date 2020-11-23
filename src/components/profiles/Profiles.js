@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getProfiles } from "../../actions/profiles";
 import ProfileItem from "./ProfileItem";
+import Spinner from '../layout/Spinner';
 
 const Profiles = ({ profiles: { profiles, loading }, getProfiles }) => {
   useEffect(() => {
@@ -25,7 +26,7 @@ const Profiles = ({ profiles: { profiles, loading }, getProfiles }) => {
           </div>
         </Fragment>
       ) : (
-        <p>Loading</p>
+        <Spinner/>
       )}
     </Fragment>
   );
