@@ -4,8 +4,14 @@ import axios from "axios";
 //import userAuth from "../../src/Mock/registeredUser.json";
 
 //Load User
-export const loadUser = () => (dispatch) => {
-  if (localStorage.isLoggedIn && localStorage.isLoggedIn) {
+export const loadUser = () => async (dispatch) => {
+  
+  const authUser = await axios.get(
+    "https://my-json-server.typicode.com/NeeleshPoojari/fakeJsonAuth/userAuth"
+  );
+
+  
+  if (localStorage && localStorage.isLoggedIn && localStorage.isLoggedIn === authUser.data.username) {
     dispatch({
       type: AllTypes.USER_LOADED,
       payload: localStorage.isLoggedIn,
