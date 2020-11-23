@@ -1,13 +1,11 @@
 import { AllTypes } from "./types";
 import { setAlert } from "./alert";
-import userAuth from "../../src/Mock/registeredUser.json";
+import axios from "axios";
+//import userAuth from "../../src/Mock/registeredUser.json";
 
 //Load User
 export const loadUser = () => (dispatch) => {
-  if (
-    localStorage.isLoggedIn &&
-    localStorage.isLoggedIn === userAuth.username
-  ) {
+  if (localStorage.isLoggedIn && localStorage.isLoggedIn) {
     dispatch({
       type: AllTypes.USER_LOADED,
       payload: localStorage.isLoggedIn,
@@ -19,21 +17,55 @@ export const loadUser = () => (dispatch) => {
   }
 };
 
-// Login user
-export const login = (email, password) => (dispatch) => {
-  if (email === userAuth.username && password === userAuth.password) {
-    dispatch({
-      type: AllTypes.LOGIN_SUCCESS,
-      payload: userAuth.username,
-    });
-  } else {
-    dispatch(setAlert("Username or password incorrect", "danger"));
+// export const login = (email, password) => (dispatch) => {
+//   if (email === userAuth.username && password === userAuth.password) {
+//     dispatch({
+//       type: AllTypes.LOGIN_SUCCESS,
+//       payload: userAuth.username,
+//     });
+//   } else {
+//     dispatch(setAlert("Username or password incorrect", "danger"));
 
+//     dispatch({
+//       type: AllTypes.LOGIN_FAIL,
+//     });
+//   }
+//
+
+// Login user
+//fake response https://my-json-server.typicode.com/NeeleshPoojari/fakeJsonAuth/userAuth;
+
+export const login = (email, password) => async (dispatch) => {
+  try {
+    const userAuth = await axios.get(
+      "https://my-json-server.typicode.com/NeeleshPoojari/fakeJsonAuth/userAuth"
+    );
+
+    console.log("userAuth", userAuth);
+
+    if (
+      email === userAuth.data.username &&
+      password === userAuth.data.password
+    ) {
+      dispatch({
+        type: AllTypes.LOGIN_SUCCESS,
+        payload: userAuth.data.username,
+      });
+    } else {
+      dispatch(setAlert("Username or password incorrect", "danger"));
+
+      dispatch({
+        type: AllTypes.LOGIN_FAIL,
+      });
+    }
+  } catch (error) {
     dispatch({
       type: AllTypes.LOGIN_FAIL,
     });
   }
 };
+
+
 
 //Logout user
 

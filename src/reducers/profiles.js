@@ -13,7 +13,7 @@ export default function (state = initialState, action) {
     case AllTypes.GET_PROFILES:
       return {
         ...state,
-        profiles: payload.user,
+        profiles: payload,
         loading: false,
       };
 
